@@ -17,6 +17,7 @@ export class Background {
 
     draw() {
         this.ctx.drawImage(this.image, this.destinationX, this.destinationY);
+
         this.ctx.drawImage(
             this.image,
             this.destinationX + this.width,
