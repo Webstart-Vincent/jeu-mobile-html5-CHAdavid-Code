@@ -1,7 +1,7 @@
 import { Background } from "./background.js";
 import { Player } from "./player.js";
 import { InputHandler } from "./input-handler.js";
-// import { EnemyPool } from "./enemypool.js";
+import { EnemyPool } from "./enemypool.js";
 
 export class Game {
     score = 0;
@@ -21,7 +21,7 @@ export class Game {
 
         this.player = new Player(this);
 
-        // this.Enemypool = new this.enemypool();
+        this.EnemyPool = new EnemyPool(this);
 
         this.LastTimeStamp = 0;
         this.animate(0);
@@ -40,7 +40,7 @@ export class Game {
         this.background.draw();
         this.background.update(deltaTime);
 
-        // this.enemypool.render(deltaTime, deltaTime);
+        this.EnemyPool.render(deltaTime, deltaTime);
 
         this.player.draw();
         this.player.update(timeStamp);

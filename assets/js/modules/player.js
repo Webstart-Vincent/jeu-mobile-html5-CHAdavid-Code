@@ -25,7 +25,7 @@ export class Player {
         this.ctx = game.ctx;
         this.inputkeys = game.InputHandler.keys;
 
-        this.frameWidth = 116;
+        this.frameWidth = 115;
         this.frameHeight = 179;
 
         const { canvas } = game;
@@ -34,17 +34,29 @@ export class Player {
     }
 
     draw() {
+        const scale = 0.5; // Adjust the scale factor as needed
+
+        const scaledWidth = this.frameWidth * scale;
+        const scaledHeight = this.frameHeight * scale;
+
+        const destinationX =
+            this.destinationX + (this.frameWidth - scaledWidth) / 2;
+        const destinationY =
+            this.destinationY + (this.frameHeight - scaledHeight) / 2;
+
+        this.ctx.imageSmoothingEnabled = false; // Disable image smoothing
         this.ctx.drawImage(
             this.image,
             this.sourceX,
             this.sourceY,
-            this.frameWidth, // cadrage dans la source
-            this.frameHeight, // cadrage dans la source
-            this.destinationX,
-            this.destinationY,
-            this.frameWidth, // dimension dans la destination
-            this.frameHeight // dimension dans la destination
+            this.frameWidth,
+            this.frameHeight,
+            destinationX,
+            destinationY,
+            scaledWidth,
+            scaledHeight
         );
+        this.ctx.imageSmoothingEnabled = true; // Enable image smoothing for other drawing operations
     }
 
     /**

@@ -1,6 +1,6 @@
 import { Game } from "./game.js";
 
-export class enemy {
+export class Enemy {
     sourceX = 0;
     sourceY = 0;
 
@@ -32,16 +32,26 @@ export class enemy {
     };
 
     draw() {
+        const scale = 0.5;
+
+        const scaledWidth = this.frameWidth * scale;
+        const scaledHeight = this.frameHeight * scale;
+
+        const destinationX =
+            this.destinationX + (this.frameWidth - scaledWidth) / 2;
+        const destinationY =
+            this.destinationY + (this.frameHeight - scaledHeight) / 2;
+
         this.ctx.drawImage(
             this.image,
             this.sourceX,
             this.sourceY,
             this.frameWidth,
             this.frameHeight,
-            this.destinationX,
-            this.destinationY,
-            this.frameWidth,
-            this.frameHeight
+            destinationX,
+            destinationY,
+            scaledWidth,
+            scaledHeight
         );
     }
 
@@ -66,8 +76,36 @@ export class enemy {
     }
 }
 
-activateEnemy = () => {
-    const enemy = this.enemy.find((bs) => !bs.isActive);
-    if (enemy) enemy.reset();
-    else this.enemy.push(new enemy(this.game));
-};
+export class EnemyPool {
+    /**
+     *
+     * @param {Game} game
+     */
+    constructor(game) {
+        this.game = game;
+        this.enemy = [];
+        this.resetTimer();
+    }
+
+    render(timeStamp, deltaTime) {
+        if (this.timer > this.nextTime) {
+            this.activateEnemy();
+            this.resetTimer();
+        } else {
+            this.timer += deltaTime;
+        }
+
+        for (const activeEnemy of this.enemy.filter((bs) => bs.isActive)) {
+            activeEnemy.render(timeStamp, deltaTime);
+        }
+    }
+
+    activateEnemy() {
+        const enemy = this.enemy.find((bs) => !bs.isActive);
+        if (enemy) {
+            enemy.reset();
+        } else {
+            this.enemy.push(new Enemy(this.game));
+        }
+    }
+}
