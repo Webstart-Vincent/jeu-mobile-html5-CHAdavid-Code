@@ -1,5 +1,7 @@
 import { Background } from "./background.js";
 import { Player } from "./player.js";
+import { InputHandler } from "./input-handler.js";
+// import { EnemyPool } from "./enemypool.js";
 
 export class Game {
     score = 0;
@@ -13,9 +15,13 @@ export class Game {
 
         this.ctx = this.canvas.getContext("2d");
 
+        this.InputHandler = new InputHandler();
+
         this.background = new Background(this.ctx);
 
-        this.player = new Player(this.ctx);
+        this.player = new Player(this);
+
+        // this.Enemypool = new this.enemypool();
 
         this.LastTimeStamp = 0;
         this.animate(0);
@@ -33,6 +39,8 @@ export class Game {
 
         this.background.draw();
         this.background.update(deltaTime);
+
+        // this.enemypool.render(deltaTime, deltaTime);
 
         this.player.draw();
         this.player.update(timeStamp);
