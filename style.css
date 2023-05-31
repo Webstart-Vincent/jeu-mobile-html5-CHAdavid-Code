@@ -2,6 +2,7 @@ body {
     display: grid;
     align-items: center;
     min-height: 100vh;
+    background-color: black;
 }
 
 canvas {
@@ -9,4 +10,15 @@ canvas {
     aspect-ratio: 480 / 360;
     border: solid;
     margin: auto;
+}
+
+.message {
+    display: none;
+    color: white; /* Ajout de la couleur du texte */
+}
+
+@media (orientation: portrait) {
+    .message {
+        display: block;
+    }
 }
